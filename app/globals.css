@@ -16,7 +16,7 @@
 --e:cubic-bezier(.16,1,.3,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:6.5rem}
+html{scroll-behavior:smooth;scroll-padding-top:6rem}
 body{background:var(--bg);color:var(--fg);font-family:var(--sn);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 h1,h2,h3{font-weight:700;line-height:1.04;letter-spacing:-.035em;text-wrap:balance}
@@ -67,35 +67,19 @@ section{position:relative}
    text overlap ka wahi karan tha. */
 nav{position:fixed;inset:0 0 auto;z-index:90;padding-block:.8rem;transition:padding .35s var(--e),transform .4s var(--e)}
 nav::before{content:"";position:absolute;inset:0;
-background:linear-gradient(180deg,rgba(6,20,18,.86),rgba(5,14,15,.72));
-backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%);
+background:linear-gradient(180deg,rgba(4,7,10,.94),rgba(4,7,10,.82));
+backdrop-filter:blur(26px) saturate(160%);-webkit-backdrop-filter:blur(26px) saturate(160%);
 border-bottom:1px solid rgba(255,255,255,.05);
 transition:background .35s var(--e),border-color .35s var(--e)}
-nav.stuck{padding-block:.6rem}nav.stuck::before{background:linear-gradient(180deg,rgba(6,22,20,.94),rgba(5,15,16,.88));border-bottom-color:rgba(52,211,153,.14)}
+nav.stuck{padding-block:.6rem}
+nav.stuck::before{background:rgba(4,7,10,.97);border-bottom-color:var(--bd)}
 .nav-in{position:relative;z-index:1}
 .nav-in{max-width:var(--pg);margin-inline:auto;padding-inline:var(--g);display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .logo{display:flex;align-items:center;gap:.6rem;font-weight:700;letter-spacing:-.03em;font-size:1.28rem}
-.lm{
-  width:30px;height:30px;flex:none;position:relative;
-  border-radius:9px;display:grid;place-items:center;
-  background:linear-gradient(140deg,#10b981 0%,#34d399 45%,#22d3ee 100%);
-  box-shadow:0 0 22px -6px rgba(16,185,129,.9),inset 0 1px 0 rgba(255,255,255,.32);
-  transition:transform .5s var(--e),box-shadow .5s var(--e);
-  overflow:hidden;
-}
+.lm{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--p),var(--tl));position:relative;flex:none;transition:transform .55s var(--e)}
 .logo:hover .lm{transform:rotate(135deg)}
-.lm::before{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.4) 50%,transparent 65%);
-  transform:translateX(-120%);transition:transform .7s var(--e);
-}
-.logo:hover .lm{transform:rotate(-8deg) scale(1.06);box-shadow:0 0 32px -4px rgba(16,185,129,1)}
-.logo:hover .lm::before{transform:translateX(120%)}
-.lm svg{width:100%;height:100%;position:relative;z-index:1;color:#04120e}
-/* stroke draw animation on load */
-.lm-n{stroke-dasharray:60;stroke-dashoffset:60;animation:lmDraw 1.1s var(--e) .2s forwards}
-@keyframes lmDraw{to{stroke-dashoffset:0}}
-.navpill{display:none;align-items:center;gap:.2rem;padding:.38rem;border-radius:999px;background:rgba(8,26,24,.82);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border:1px solid var(--bd);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 34px -18px rgba(0,0,0,.95)}
+.lm::after{content:"";position:absolute;inset:7px;border-radius:3px;background:var(--bg)}
+.navpill{display:none;align-items:center;gap:.2rem;padding:.38rem;border-radius:999px;background:rgba(9,18,20,.96);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border:1px solid var(--bd);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 34px -18px rgba(0,0,0,.95)}
 @media(min-width:1000px){.navpill{display:flex}}
 .navpill a{padding:.55rem 1.15rem;border-radius:999px;font-size:.92rem;color:var(--mut);transition:all .25s var(--e)}
 .navpill a:hover{color:#fff;background:rgba(255,255,255,.07)}
@@ -342,94 +326,6 @@ transition:transform .35s var(--e),border-color .35s;width:min(44%,178px)}
 .mag{transition:transform .2s var(--e),background .25s var(--e),box-shadow .3s var(--e)}
 
 /* ==== HERO MOTION LAYER ==== */
-/* ORB — deeper motion
-   Sphere ab sirf breathe nahi karta: uske andar ka light source ghoomta hai,
-   rings tilt hoti hain, aur bahar energy arcs travel karte hain. Sab
-   transform aur opacity pe hai, toh compositor pe hi rehta hai. */
-
-/* light source jo sphere ke andar slowly ghoomta hai */
-.cglow{animation:cbreathe 6s var(--e) infinite,cshift 14s ease-in-out infinite}
-@keyframes cshift{
-  0%,100%{background-position:38% 30%}
-  33%{background-position:58% 42%}
-  66%{background-position:30% 55%}
-}
-
-/* rings ab tilt bhi karti hain, sirf spin nahi */
-.cr1{animation:crs 14s linear infinite,tiltA 11s ease-in-out infinite}
-.cr2{animation:crs 22s linear infinite reverse,tiltB 15s ease-in-out infinite}
-@keyframes tiltA{0%,100%{rotate:x 74deg}50%{rotate:x 68deg}}
-@keyframes tiltB{0%,100%{rotate:x 70deg}50%{rotate:x 78deg}}
-
-/* energy arcs — sphere ke around do arcs jo alag speed pe ghoomte hain */
-.orbwrap::before,.orbwrap::after{
-  content:"";position:absolute;top:50%;left:50%;border-radius:999px;
-  border:1px solid transparent;pointer-events:none;
-}
-.orbwrap::before{
-  width:340px;height:340px;margin:-170px 0 0 -170px;
-  border-top-color:rgba(110,231,183,.55);
-  border-right-color:rgba(34,211,238,.28);
-  animation:arcA 9s linear infinite;
-}
-.orbwrap::after{
-  width:430px;height:430px;margin:-215px 0 0 -215px;
-  border-bottom-color:rgba(52,211,153,.32);
-  animation:arcB 16s linear infinite reverse;
-}
-@keyframes arcA{to{transform:rotate(360deg)}}
-@keyframes arcB{to{transform:rotate(360deg)}}
-
-/* CARDS — har card ka apna float rhythm
-   Pehle sab ek jaise float karte the, jisse group ek block jaisa lagta tha.
-   Alag duration aur delay se ye ek "living system" jaisa padha jaata hai. */
-.fcA{animation:fcIn .9s var(--e) forwards,flA 7.5s ease-in-out 1.4s infinite}
-.fcB{animation:fcIn .9s var(--e) forwards,flB 9s ease-in-out 1.6s infinite}
-.fcC{animation:fcIn .9s var(--e) forwards,flC 8.2s ease-in-out 1.8s infinite}
-.fcD{animation:fcIn .9s var(--e) forwards,flB 10s ease-in-out 2s infinite}
-.fcE{animation:fcIn .9s var(--e) forwards,flA 8.8s ease-in-out 2.2s infinite}
-.fcF{animation:fcIn .9s var(--e) forwards,flC 9.4s ease-in-out 2.4s infinite}
-.fcG{animation:fcIn .9s var(--e) forwards,flB 7.8s ease-in-out 2.6s infinite}
-
-@keyframes flA{
-  0%,100%{transform:translate3d(0,0,0) rotate(0deg)}
-  50%{transform:translate3d(4px,-12px,0) rotate(.6deg)}
-}
-@keyframes flB{
-  0%,100%{transform:translate3d(0,0,0) rotate(0deg)}
-  50%{transform:translate3d(-5px,-9px,0) rotate(-.5deg)}
-}
-@keyframes flC{
-  0%,100%{transform:translate3d(0,0,0) rotate(0deg)}
-  50%{transform:translate3d(3px,-14px,0) rotate(.4deg)}
-}
-
-/* card ke border pe halka travelling highlight */
-.fc{position:absolute;overflow:hidden}
-.fc::after{
-  content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;
-  background:conic-gradient(from var(--ang,0deg),transparent 0 72%,rgba(110,231,183,.5) 82%,transparent 92%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;
-  opacity:0;transition:opacity .4s var(--e);pointer-events:none;
-}
-.fc:hover::after{opacity:1;animation:angSpin 2.6s linear infinite}
-@keyframes angSpin{to{--ang:360deg}}
-@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
-
-/* hover pe card thoda aage aata hai aur uska glow badhta hai */
-.fc:hover{
-  z-index:6;
-  transform:translate3d(0,-8px,0) scale(1.035)!important;
-  animation-play-state:paused;
-  box-shadow:0 22px 60px -24px rgba(0,0,0,.95),0 0 44px -18px rgba(16,185,129,.9);
-}
-
-/* orbiting particles — trails ke saath */
-.opart{box-shadow:0 0 10px var(--s),0 0 22px -4px var(--s)}
-.p2{animation-duration:11s}
-.p3{animation-duration:13s}
-.p5{animation-duration:15s}
 
 /* cards orb se bahar aati hui feel — entrance stagger.
    Card names fcA-fcG hain, isliye har ek ka apna delay. */
@@ -919,20 +815,52 @@ border:1px solid var(--bd);background:rgba(255,255,255,.035);transition:all .28s
 @media(min-width:700px){.pzg{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1140px){.pzg{grid-template-columns:repeat(4,1fr)}}
 .pzg>.rv{display:flex}
-.tr{border-radius:1.2rem;padding:1.6rem 1.5rem;display:flex;flex-direction:column;width:100%;transition:all .35s var(--e)}
-.tr:hover{transform:translateY(-4px);border-color:var(--bd2)}
+/* PRICING CARD
+   flex column + .trl ko flex:1 dene se button hamesha neeche chipakta hai
+   aur saare cards ki height apne aap match ho jaati hai — koi fixed height
+   thopne ki zaroorat nahi. */
+.tr{position:relative;overflow:hidden;border-radius:1.2rem;padding:1.6rem 1.5rem;
+display:flex;flex-direction:column;width:100%;
+transition:transform .4s var(--e),border-color .4s var(--e),box-shadow .4s var(--e)}
+
+/* travelling border light on hover — hero cards jaisa hi treatment */
+.tr::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;
+background:conic-gradient(from var(--pang,0deg),transparent 0 74%,rgba(110,231,183,.55) 84%,transparent 94%);
+-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;
+transition:opacity .4s var(--e);pointer-events:none}
+.tr:hover::after{opacity:1;animation:pangSpin 2.8s linear infinite}
+@keyframes pangSpin{to{--pang:360deg}}
+@property --pang{syntax:"<angle>";initial-value:0deg;inherits:false}
+
+/* cards staggered aate hain jab section viewport me aata hai */
+.pzg{align-items:stretch}
+.pzg>.rv{display:flex;animation:prIn .55s var(--e) backwards}
+.pzg>.rv:nth-child(1){animation-delay:.05s}
+.pzg>.rv:nth-child(2){animation-delay:.12s}
+.pzg>.rv:nth-child(3){animation-delay:.19s}
+.pzg>.rv:nth-child(4){animation-delay:.26s}
+@keyframes prIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+/* toggle centre me */
+.tog{margin-inline:auto}
+.tr:hover{transform:translateY(-6px);border-color:rgba(52,211,153,.45);box-shadow:0 26px 64px -28px rgba(0,0,0,.95),0 0 50px -20px rgba(16,185,129,.9)}
 .tr.hot{border-color:rgba(52,211,153,.5);
 background:linear-gradient(160deg,rgba(16,185,129,.16),rgba(255,255,255,.02));
 box-shadow:0 0 60px -24px rgba(16,185,129,.9)}
 @media(min-width:1140px){.tr.hot{transform:translateY(-12px)}
 .tr.hot:hover{transform:translateY(-16px)}}
-.trb{align-self:flex-start;font-family:var(--mn);font-size:.61rem;letter-spacing:.12em;text-transform:uppercase;color:var(--s);background:rgba(16,185,129,.18);border:1px solid rgba(52,211,153,.28);border-radius:999px;padding:.28rem .75rem;margin-bottom:1.1rem}
+.trb{align-self:flex-start;font-family:var(--mn);font-size:.61rem;letter-spacing:.12em;text-transform:uppercase;color:var(--s);background:rgba(16,185,129,.18);border:1px solid rgba(52,211,153,.28);border-radius:999px;padding:.28rem .75rem;margin-bottom:.9rem}
+/* badge na hone par icon ko utni hi jagah do, taaki rows align rahein */
+.tr:not(.hot) .trico{margin-top:1.85rem}
+@media(max-width:1139px){.tr:not(.hot) .trico{margin-top:0}}
 .trico{display:grid;place-items:center;width:42px;height:42px;border-radius:.75rem;color:var(--s);
 background:linear-gradient(140deg,rgba(16,185,129,.26),rgba(34,211,238,.08));
 border:1px solid rgba(52,211,153,.32);margin-bottom:1rem;transition:all .38s var(--e)}
 .tr:hover .trico{transform:scale(1.08) rotate(-6deg);box-shadow:0 0 24px -6px rgba(16,185,129,.9)}
 .trn{font-weight:600;font-size:1.05rem;letter-spacing:-.02em}
-.trtag{font-size:.75rem;color:var(--fnt);margin-top:.25rem;line-height:1.45}
+.trtag{font-size:.75rem;color:var(--fnt);margin-top:.25rem;line-height:1.45;min-height:2.2rem}
+@media(max-width:1139px){.trtag{min-height:auto}}
 .trp{font-family:var(--mn);font-size:1.9rem;margin-top:1rem;font-variant-numeric:tabular-nums;background:linear-gradient(120deg,#fff,var(--s));-webkit-background-clip:text;background-clip:text;color:transparent}
 .trsf{font-size:.95rem;color:var(--fnt)}
 .trs{font-size:.79rem;color:var(--fnt);margin-top:.35rem}
@@ -1095,218 +1023,377 @@ footer{border-top:1px solid var(--bd);padding-block:3.5rem 2.5rem;margin-top:2re
 .fl2 a:hover{color:#fff;transform:translateX(4px)}
 .fb{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--bd);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;font-size:.79rem;color:var(--fnt)}
 
-@media(prefers-reduced-motion:reduce){.bpanel,.bpanel .fviz{animation:none}*{animation:none!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}.w>span{transform:none}.bar{transform:scaleY(1)}.fc{opacity:1!important;transform:none!important}.chat-r,.srcrow{opacity:1!important}.confl i{transform:scaleX(1)}.slot.on,.lead,.fld2{opacity:1!important}.crv{stroke-dashoffset:0}.crvf,.crvd{opacity:1}.hwave,.hbeam{display:none}.hl-p{stroke-dasharray:none}.st::before{transform:scaleX(1)}.tlfill{width:100%!important}.scbar i{transform:scaleX(1)}.bar{transform:scaleY(1)!important}.spk{stroke-dashoffset:0}.spkf{opacity:1}}
-.lm-n{stroke-dashoffset:0}
-/* CASE STUDY CARDS
-   Problem → Solution → Outcome ek visual ladder banate hain. Labels colored
-   hain taaki scan karne wala visitor bina padhe bhi structure samajh jaye. */
+@media(prefers-reduced-motion:reduce){.pzg>.rv{animation:none}.tr:hover::after{animation:none}*{animation:none!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}.w>span{transform:none}.bar{transform:scaleY(1)}.fc{opacity:1!important;transform:none!important}.chat-r,.srcrow{opacity:1!important}.confl i{transform:scaleX(1)}.slot.on,.lead,.fld2{opacity:1!important}.crv{stroke-dashoffset:0}.crvf,.crvd{opacity:1}.hwave,.hbeam{display:none}.hl-p{stroke-dasharray:none}.st::before{transform:scaleX(1)}.tlfill{width:100%!important}.scbar i{transform:scaleX(1)}.bar{transform:scaleY(1)!important}.spk{stroke-dashoffset:0}.spkf{opacity:1}}
+
+/* ==========================================================================
+   INSIDE THE BUILD — tabs
+   Active demo bada rehta hai, tabs sirf switch karti hain. Isliye tabs
+   deliberately chhoti aur neutral hain — wo hero nahi hain, demo hai.
+   ========================================================================== */
+.btabs{margin-top:2.6rem;display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.btab{display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;font-family:inherit;
+font-size:.88rem;font-weight:600;color:var(--mut);background:rgba(255,255,255,.035);
+border:1px solid var(--bd);border-radius:.8rem;padding:.65rem 1.1rem;transition:all .28s var(--e)}
+.btab:hover{color:#fff;border-color:var(--bd2);background:rgba(255,255,255,.06)}
+.btab.on{color:#04120e;background:linear-gradient(135deg,#10b981,#34d399);
+border-color:transparent;box-shadow:0 8px 26px -10px rgba(16,185,129,.8)}
+.btabi{display:grid;place-items:center;opacity:.85}
+
+.bpanel{margin-top:2.4rem;display:grid;gap:2.5rem;align-items:center;animation:bpIn .55s var(--e)}
+@media(min-width:960px){.bpanel{grid-template-columns:1fr 1.15fr;gap:3.5rem}}
+@keyframes bpIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.bpanel .fviz{animation:bpViz .6s var(--e)}
+@keyframes bpViz{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+@media(max-width:560px){.btab{font-size:.8rem;padding:.55rem .85rem}.btabs{gap:.4rem}}
+
+/* ==========================================================================
+   CASE STUDY CARDS
+   Problem to Solution to Outcome ek visual ladder banate hain. Labels colored
+   hain taaki scan karne wala visitor bina padhe bhi structure samajh jaye.
+   ========================================================================== */
 .cs{margin-top:1rem;display:grid;gap:.85rem}
 .csrow{display:grid;gap:.3rem}
 .cslbl{font-family:var(--mn);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--fnt);display:inline-flex;align-items:center;gap:.35rem}
+color:var(--fnt);display:inline-flex;align-items:center;gap:.35rem}
 .cslbl::before{content:"";width:5px;height:5px;border-radius:99px;background:currentColor;flex:none}
 .cslbl.bad{color:#ff8b95}
 .cslbl.good{color:var(--a)}
 .cstxt{font-size:.82rem;color:var(--mut);line-height:1.55}
 .cstxt.strong{color:#cfe6df;font-weight:500}
 .csrow.out{padding-top:.75rem;border-top:1px solid var(--bd)}
-
 .wcask{font-size:.72rem;color:var(--fnt);transition:color .25s var(--e)}
 .wcask b{color:var(--s);font-weight:600}
 .wcask:hover{color:var(--mut)}
 .wcf{flex-wrap:wrap;gap:.5rem}
-/* INDUSTRY CARD — problems + solutions ek card me
-   Problems ki list deliberately plain hai (bullets, koi icon nahi) aur
+
+/* ==========================================================================
+   INDUSTRY CARD — problems + solutions ek card me
+   Problems ki list deliberately plain hai (dashes, koi icon nahi) aur
    solutions checkmarked. Contrast se ladder banti hai: ye tootta hai,
-   ye hum banate hain. */
+   ye hum banate hain.
+   ========================================================================== */
 .icsec{margin-top:1.1rem;padding-top:.95rem;border-top:1px solid var(--bd)}
 .icslbl{font-family:var(--mn);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--fnt);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.65rem}
+color:var(--fnt);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.65rem}
 .icslbl::before{content:"";width:5px;height:5px;border-radius:99px;background:currentColor;flex:none}
 .icslbl.bad{color:#ff8b95}
-
 .icpl{list-style:none;display:grid;gap:.5rem}
 .icpl li{position:relative;padding-left:1rem;font-size:.81rem;color:var(--mut);line-height:1.5}
 .icpl li::before{content:"";position:absolute;left:0;top:.55em;width:5px;height:1px;background:rgba(255,139,149,.6)}
-
-/* solutions list ab section ke andar hai, toh apna border nahi chahiye */
 .icsec .icdl{margin-top:0;padding-top:0;border-top:none}
-/* INSIDE THE BUILD — tabs */
-.btabs {
-  margin-top: 2.6rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
-}
 
-.btab {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--mut);
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid var(--bd);
-  border-radius: 0.8rem;
-  padding: 0.65rem 1.1rem;
-  transition: all 0.28s var(--e);
-}
-
-.btab:hover {
-  color: #fff;
-  border-color: var(--bd2);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.btab.on {
-  color: #04120e;
-  background: linear-gradient(135deg, #10b981, #34d399);
-  border-color: transparent;
-  box-shadow: 0 8px 26px -10px rgba(16, 185, 129, 0.8);
-}
-
-.btabi {
-  display: grid;
-  place-items: center;
-  opacity: 0.85;
-}
-
-.bpanel {
-  margin-top: 2.4rem;
-  display: grid;
-  gap: 2.5rem;
-  align-items: center;
-  animation: bpIn 0.55s var(--e);
-}
-
-@media (min-width: 960px) {
-  .bpanel {
-    grid-template-columns: 1fr 1.15fr;
-    gap: 3.5rem;
-  }
-}
-
-@keyframes bpIn {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; }
-}
-
-.bpanel .fviz {
-  animation: bpViz 0.6s var(--e);
-}
-
-@keyframes bpViz {
-  from { opacity: 0; transform: scale(0.97); }
-  to { opacity: 1; transform: none; }
-}
-
-@media (max-width: 560px) {
-  .btab { font-size: 0.8rem; padding: 0.55rem 0.85rem; }
-  .btabs { gap: 0.4rem; }
-}
-/* TRUST GRID — process section ke andar
+/* ==========================================================================
+   TRUST GRID — process section ke andar
    Timeline cards se chhote rakhe hain taaki hierarchy bani rahe: process
-   primary hai, trust points uski support hain. */
-.trustwrap {
-  margin-top: 3.2rem;
-  padding-top: 2.4rem;
-  border-top: 1px solid var(--bd);
+   primary hai, trust points uski support hain.
+   ========================================================================== */
+.trustwrap{margin-top:3.2rem;padding-top:2.4rem;border-top:1px solid var(--bd)}
+.trusth{font-family:var(--mn);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+color:var(--fnt);text-align:center}
+.trustg{margin-top:1.6rem;display:grid;gap:1rem}
+@media(min-width:640px){.trustg{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1060px){.trustg{grid-template-columns:repeat(4,1fr)}}
+.trustg>.rv{display:flex}
+.tc{width:100%;border-radius:1.1rem;padding:1.5rem 1.4rem;transition:all .35s var(--e)}
+.tc:hover{transform:translateY(-4px);border-color:rgba(52,211,153,.4);
+box-shadow:0 0 46px -20px rgba(16,185,129,.85)}
+.tci{display:grid;place-items:center;width:40px;height:40px;border-radius:.72rem;color:var(--s);
+background:linear-gradient(140deg,rgba(16,185,129,.24),rgba(34,211,238,.07));
+border:1px solid rgba(52,211,153,.3);transition:all .38s var(--e)}
+.tc:hover .tci{transform:scale(1.08) rotate(-6deg);box-shadow:0 0 24px -6px rgba(16,185,129,.9)}
+.tch{font-size:.97rem;font-weight:600;margin-top:1.1rem;letter-spacing:-.02em}
+.tcp{margin-top:.55rem;font-size:.83rem;color:var(--mut);line-height:1.6}
+
+@media(prefers-reduced-motion:reduce){
+  .bpanel,.bpanel .fviz{animation:none}
 }
 
-.trusth {
-  font-family: var(--mn);
-  font-size: 0.64rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--fnt);
-  text-align: center;
+/* ==========================================================================
+   RESPONSIVE LAYER
+   Chaar device classes: mobile (<640), large mobile (640-859),
+   tablet (860-1059), laptop/desktop (1060+).
+
+   Approach: base styles mobile-first hain, aur yahan sirf wo cheezein
+   adjust ki hain jo chhoti screen pe tootti hain. Hero orb + floating cards
+   sabse bada risk hain — wo absolute positioned hain, toh mobile pe unhe
+   normal flow me daal diya hai.
+   ========================================================================== */
+
+/* --------------------------------------------------------- TABLET & BELOW */
+@media (max-width: 1059px) {
+
+  /* Hero ab single column — visual text ke neeche */
+  .hgrid { gap: 2.5rem }
+  .hviz { min-height: 420px }
+
+  /* Nav pill hide, burger menu dikhta hai */
+  .navpill { display: none }
+  .loginb { padding: .6rem 1.1rem; font-size: .84rem }
+
+  /* Services hub ka core hide — cards stack ho jaate hain */
+  .hubcore { display: none }
+  .hub { grid-template-columns: 1fr; gap: 1.1rem }
+  .hubcol { gap: 1.1rem }
 }
 
-.trustg {
-  margin-top: 1.6rem;
-  display: grid;
-  gap: 1rem;
+/* ------------------------------------------------------- MOBILE (< 640px) */
+@media (max-width: 639px) {
+
+  /* --- Typography: heading sizes clamp already handle karte hain,
+         lekin line-height aur tracking tighter chahiye chhoti screen pe --- */
+  h1 { line-height: 1.08; letter-spacing: -.035em }
+  .h2 { line-height: 1.12; max-width: 100% }
+  .lede { font-size: .95rem }
+
+  /* --- Section padding kam, warna scroll bahut lamba ho jaata hai --- */
+  :root { --sec: 3.6rem }
+  .hero { padding-top: 7.5rem; padding-bottom: 3.2rem }
+
+  /* --- HERO VISUAL: absolute cards ko normal flow me daal do.
+         Overlapping cards mobile pe padhe hi nahi jaate. --- */
+  .hviz {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    padding-top: 1rem;
+  }
+
+  /* Orb ab apni jagah leta hai, absolute nahi */
+  .orbwrap {
+    position: relative;
+    inset: auto;
+    height: 240px;
+    order: -1;
+  }
+  .core { width: 160px; height: 160px }
+  .opulse { width: 160px; height: 160px }
+  .cmark { font-size: 2.2rem }
+  .ob1 { width: 260px; height: 240px }
+  .ob2 { width: 220px; height: 200px }
+
+  /* Particles ka radius chhota, warna screen se bahar chale jaate hain */
+  @keyframes orb1 {
+    from { transform: rotate(0) translateX(96px) rotate(0) }
+    to { transform: rotate(360deg) translateX(96px) rotate(-360deg) }
+  }
+  @keyframes orb2 {
+    from { transform: rotate(0) translateX(126px) rotate(0) }
+    to { transform: rotate(-360deg) translateX(126px) rotate(360deg) }
+  }
+
+  /* Cards ab stacked, do-do ki row me */
+  .fc {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    margin: 0 !important;
+    transform: none !important;
+    animation: fcIn .6s var(--e) backwards !important;
+  }
+  .fcA, .fcC, .fcD, .fcE, .fcF, .fcG, .fcB { display: block }
+
+  /* Sirf teen sabse strong cards mobile pe — baaki noise hain */
+  .fcB, .fcE, .fcF { display: none }
+
+  /* Do-column grid banate hain hero cards ka */
+  .hviz {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .7rem;
+  }
+  .orbwrap { grid-column: 1 / -1 }
+  .fcG { grid-column: 1 / -1 }
+
+  /* --- Buttons full width, tap target bada --- */
+  .hb { flex-direction: column; align-items: stretch }
+  .hb .btn { justify-content: center; width: 100% }
+  .ctab { justify-content: center }
+
+  /* --- Hero proof block --- */
+  .hproof { grid-template-columns: 1fr }
+  .hmini { grid-template-columns: repeat(3, 1fr); gap: .5rem; padding: .7rem .6rem }
+  .hmv { font-size: .88rem }
+  .hml { font-size: .58rem }
+
+  /* --- Tech strip: horizontal scroll instead of wrapping --- */
+  .tstrip { grid-template-columns: 1fr; padding: 1rem 1.1rem }
+  .tsg {
+    justify-content: flex-start;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: .3rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .tsg::-webkit-scrollbar { display: none }
+  .tsi { flex: none; font-size: .8rem }
+
+  /* --- Value bar --- */
+  .hstats { grid-template-columns: 1fr }
+  .hstats > div { padding: .95rem 1rem }
+  .hstats > div + div { border-left: none; border-top: 1px solid var(--bd) }
+
+  /* --- Inside the build tabs: scrollable row --- */
+  .btabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: .4rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .btabs::-webkit-scrollbar { display: none }
+  .btab { flex: none }
+  .bpanel { gap: 1.8rem; margin-top: 1.8rem }
+
+  /* Mockups ki height kam, warna card bahut lamba ho jaata hai */
+  .mkw { padding: 1rem .9rem; min-height: auto }
+  .pipe { height: 200px }
+  .dashw { padding: 1rem; min-height: auto }
+  .chartw, .bars { height: 96px }
+  .kp b { font-size: 1rem }
+
+  /* --- Pipeline nodes chhote --- */
+  .pn { font-size: .58rem; padding: .3rem .5rem }
+  .pcore { font-size: .6rem; padding: .5rem .7rem }
+
+  /* --- Process timeline: rail hide, cards stack --- */
+  .tlbar { display: none }
+  .pgd { grid-template-columns: 1fr }
+  .st::after { display: none }
+  .tlnote { font-size: .82rem; padding: .9rem 1rem }
+
+  /* --- Pricing --- */
+  .tog { width: 100%; justify-content: center }
+  .tog button { flex: 1; padding: .6rem .8rem; font-size: .8rem }
+  .tr { padding: 1.4rem 1.25rem }
+  .trp { font-size: 1.75rem }
+  .trb.ghost { display: none }
+  .tr:not(.hot) .trico { margin-top: 0 }
+  .payrow { grid-template-columns: 1fr }
+  .savebar { padding: 1.3rem 1.15rem }
+  .inclg { grid-template-columns: 1fr }
+
+  /* --- Contact --- */
+  .ctain { padding: 1.6rem 1.2rem }
+  .cgrid { gap: 1.8rem }
+  .cform { padding: 1.3rem 1.15rem }
+  .frow2 { grid-template-columns: 1fr }
+  .cdl { padding: .75rem }
+
+  /* --- Founder --- */
+  .fndin { padding: 1.6rem 1.3rem; gap: 1.6rem }
+  .fndph { width: 104px; height: 104px }
+  .fndinit { font-size: 2.1rem }
+  .fndcta { flex-direction: column; align-items: stretch }
+  .fndcta .btn { justify-content: center }
+
+  /* --- Banner --- */
+  .bnrin { padding: 1.6rem 1.3rem }
+  .bnrin .btn { justify-content: center }
+
+  /* --- FAQ --- */
+  details { padding: 1rem 1.15rem }
+  summary { font-size: .92rem; gap: 1rem }
+
+  /* --- Footer --- */
+  .fg { gap: 2rem }
+  .fb { flex-direction: column; gap: .5rem; text-align: center }
+
+  /* --- Floating WhatsApp button: icon only, kam jagah leta hai --- */
+  .fab { right: .85rem; bottom: .85rem; padding: .8rem }
+  .fab span { display: none }
+
+  /* --- Case study cards --- */
+  .cs { gap: .7rem }
+  .cstxt { font-size: .8rem }
+
+  /* --- Industries --- */
+  .ic { padding: 1.25rem 1.15rem }
+  .icpl li, .icdl li { font-size: .8rem }
 }
 
-@media (min-width: 640px) {
-  .trustg { grid-template-columns: repeat(2, 1fr); }
+/* ------------------------------------------- SMALL PHONES (< 400px) */
+@media (max-width: 399px) {
+  .hviz { grid-template-columns: 1fr }
+  .fcD, .fcC { display: none }
+  .orbwrap { height: 200px }
+  .core { width: 136px; height: 136px }
+  .opulse { width: 136px; height: 136px }
+  .hmini { grid-template-columns: 1fr; gap: .4rem }
+  .hmini > div { display: flex; justify-content: space-between; align-items: baseline }
+  .hml { margin-top: 0 }
+  .logo { font-size: 1rem }
+  .lm { width: 26px; height: 26px }
 }
 
-@media (min-width: 1060px) {
-  .trustg { grid-template-columns: repeat(4, 1fr); }
+/* --------------------------------------------- TABLET (640px - 1059px) */
+@media (min-width: 640px) and (max-width: 1059px) {
+  /* Hero cards ab do column me, orb ke neeche */
+  .hviz {
+    min-height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .9rem;
+    padding-top: 1rem;
+  }
+  .orbwrap {
+    position: relative;
+    inset: auto;
+    height: 300px;
+    grid-column: 1 / -1;
+  }
+  .core { width: 200px; height: 200px }
+  .opulse { width: 200px; height: 200px }
+  .fc {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+  .fcB, .fcF { display: none }
+  .fcG { grid-column: 1 / -1 }
+
+  /* Process cards do-do ki row me */
+  .pgd { grid-template-columns: repeat(2, 1fr) }
+  .tlbar { display: none }
+  .st::after { display: none }
 }
 
-.trustg > .rv { display: flex; }
-
-.tc {
-  width: 100%;
-  border-radius: 1.1rem;
-  padding: 1.5rem 1.4rem;
-  transition: all 0.35s var(--e);
+/* --------------------------------------- ULTRA-WIDE (1600px+) */
+@media (min-width: 1600px) {
+  /* Content bahut faila na jaye — reading comfort ke liye cap */
+  :root { --pg: 84rem }
+  .hviz { min-height: 640px }
 }
 
-.tc:hover {
-  transform: translateY(-4px);
-  border-color: rgba(52, 211, 153, 0.4);
-  box-shadow: 0 0 46px -20px rgba(16, 185, 129, 0.85);
+/* --------------------------------------- LANDSCAPE PHONE */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { padding-top: 6rem; padding-bottom: 2.5rem }
+  .orbwrap { height: 180px }
+  .core { width: 130px; height: 130px }
+  .mnav { max-height: 80vh; overflow-y: auto }
 }
 
-.tci {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 0.72rem;
-  color: var(--s);
-  background: linear-gradient(140deg, rgba(16, 185, 129, 0.24), rgba(34, 211, 238, 0.07));
-  border: 1px solid rgba(52, 211, 153, 0.3);
-  transition: all 0.38s var(--e);
+/* --------------------------------------- TOUCH DEVICES */
+@media (hover: none) {
+  /* Hover effects touch pe stuck ho jaate hain — band kar dete hain */
+  .fc:hover, .tr:hover, .sc:hover, .ic:hover, .wc:hover, .tc:hover, .st:hover {
+    transform: none;
+  }
+  .tr:hover::after, .fc:hover::after, .sc:hover::after { opacity: 0 }
+
+  /* Tap targets minimum 44px — accessibility guideline */
+  .btn, .ncta, .loginb, .btab, .chip, .tog button {
+    min-height: 44px;
+  }
+  .navpill a, .mnav a { min-height: 44px; display: flex; align-items: center }
 }
 
-.tc:hover .tci {
-  transform: scale(1.08) rotate(-6deg);
-  box-shadow: 0 0 24px -6px rgba(16, 185, 129, 0.9);
-}
-
-.tch {
-  font-size: 0.97rem;
-  font-weight: 600;
-  margin-top: 1.1rem;
-  letter-spacing: -0.02em;
-}
-
-.tcp {
-  margin-top: 0.55rem;
-  font-size: 0.83rem;
-  color: var(--mut);
-  line-height: 1.6;
-}
-/* PRICING — equal card heights
-   .trl ko flex-grow dene se button hamesha neeche chipakta hai aur cards ki
-   height apne aap match ho jaati hai. Badge sirf ek card me hai, isliye
-   baaki cards ke icon ko utni hi jagah upar se di hai. */
-.tog { margin-inline: auto }
-.pzg { align-items: stretch }
-.pzg > .rv { display: flex }
-.trl { flex: 1 1 auto }
-
-@media (min-width: 1140px) {
-  .tr:not(.hot) .trico { margin-top: 1.85rem }
-  .trtag { min-height: 2.2rem }
-}
-/* khaali badge invisible rehta hai lekin jagah leta hai */
-.trb.ghost { visibility: hidden }
-.tr:not(.hot) .trico { margin-top: 0 }
-/* toggle ko section me center karo
-   .ctrw pehle se center-aligned hai, lekin toggle uske bahar hai. Isliye
-   yahan alag se center kar rahe hain. */
-.pz .tog {
-  display: flex;
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
+/* Purane mobile rules ko override — .fcD mobile pe dikhna chahiye,
+   sirf .fcB/.fcE/.fcF hide hote hain. */
+@media (max-width: 639px) {
+  .fcD { display: block }
 }
